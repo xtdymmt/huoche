@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/ScenesGames/EasyMode/Splashs.unity
+    guid: 69083cd43f7e3d7448d25338e755e239
+  - enabled: 1
+    path: Assets/ScenesGames/EasyMode/MainMenu.unity
+    guid: 98e4582bacc6a1041b812a3452c99db0
+  - enabled: 1
+    path: Assets/ScenesGames/EasyMode/1Level.unity
+    guid: 6ef2e30672de20a49a39917618730335
+  - enabled: 1
+    path: Assets/ScenesGames/EasyMode/2Level.unity
+    guid: f837552b3315fb947985c70b02e48072
+  - enabled: 1
+    path: Assets/ScenesGames/EasyMode/3Level.unity
+    guid: c7ea5eb4514430e449b74297ab60e8d4
+  - enabled: 1
+    path: Assets/ScenesGames/EasyMode/4Level.unity
+    guid: 896d1fc9797fd9943bf89a06b4e92fe2
+  - enabled: 1
+    path: Assets/ScenesGames/EasyMode/5Level.unity
+    guid: 4b8862db019e6304796ad3407decd392
+  - enabled: 1
+    path: Assets/ScenesGames/EasyMode/6Level.unity
+    guid: 0c17d53a7ef632a459d5c6e719d49477
+  - enabled: 1
+    path: Assets/ScenesGames/EasyMode/7Level.unity
+    guid: 68c8104cd654dae4fbded93d7faf60a0
+  - enabled: 1
+    path: Assets/ScenesGames/EasyMode/8Level.unity
+    guid: 798250ad06a5cdc449783a6a4fb9d3b6
+  - enabled: 1
+    path: Assets/ScenesGames/EasyMode/9Level.unity
+    guid: 9c68ad3399a59ab438ceb7f13b84bca4
+  - enabled: 1
+    path: Assets/ScenesGames/EasyMode/10Level.unity
+    guid: ab7236e3eb04e414b8051b3b19c5d7ae
+  - enabled: 1
+    path: Assets/ScenesGames/EasyMode/11Level.unity
+    guid: 9d72c5ab5cf9eea4f963c7a648a7e61b
+  - enabled: 1
+    path: Assets/ScenesGames/EasyMode/12Level13.unity
+    guid: 89239cc1df38f8d4aa7cc81342974dd2
+  - enabled: 1
+    path: Assets/ScenesGames/z_ChallangeMode/16Level14-1_Done_0000001.unity
+    guid: 94889e586c1c0f44aadcf5b9057b72ee
+  - enabled: 1
+    path: Assets/ScenesGames/z_ChallangeMode/17LevelDesert_Done.unity
+    guid: 467670828209f9c4394900614e4cb17a
+  - enabled: 1
+    path: Assets/ScenesGames/z_ChallangeMode/18Level16-3_Done.unity
+    guid: fd4d95e825a71b941ae17de34f6704c5
+  - enabled: 1
+    path: Assets/ScenesGames/z_ChallangeMode/19Level17-4_Done.unity
+    guid: c4ef69d7a0951e54bb51f4f21b54682f
+  - enabled: 1
+    path: Assets/ScenesGames/z_ChallangeMode/20Level18-5_Done.unity
+    guid: e2fc302856ab4f148aa647eec83aa6e2
+  - enabled: 1
+    path: Assets/ScenesGames/z_ChallangeMode/21Level19-6-Done.unity
+    guid: f4576581cf1ab24439d3ccef973a09e6
+  - enabled: 1
+    path: Assets/ScenesGames/z_ChallangeMode/22Level20-7-Done.unity
+    guid: 35d0de6010c930a4d8e014d11825f93d
+  - enabled: 1
+    path: Assets/ScenesGames/z_ChallangeMode/23Level14_Done.unity
+    guid: 57e834437dd252b48900eabb888c2d6d
+  - enabled: 1
+    path: Assets/ScenesGames/z_ChallangeMode/24Level16-4_Done.unity
+    guid: 6c784791786d1de4985fae17eedc3cda
+  - enabled: 1
+    path: Assets/ScenesGames/z_ChallangeMode/25Level20-9_Done.unity
+    guid: 2f703c9e82fbf1a48a490f72a7296ea3
+  - enabled: 1
+    path: Assets/ScenesGames/z_ChallangeMode/26Level15-2_Done.unity
+    guid: 5b6ebd9ed8523594ba7df21c4e96eda7
+  - enabled: 1
+    path: Assets/ScenesGames/z_ChallangeMode/27Level19-7_Done.unity
+    guid: 5e4746ef69caaf6458344b0a30f17a1d
+  m_configObjects: {}

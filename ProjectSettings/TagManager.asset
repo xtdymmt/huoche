@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Waypoint
+  - PassangerEnter1
+  - PassangerEnter2
+  - PassangerEnter3
+  - PassangerEnter4
+  - StopPoint
+  - MissionFailed
+  - PassangerExit1
+  - PassangerExit2
+  - PassangerExit3
+  - PassangerExit4
+  - SpeedLimit
+  - SpeedLimitCross
+  - PBuggy2
+  - PBuggy3
+  - PBuggy4
+  - AiTrain
+  - TrackBusy
+  - AiTrainCol
+  - trafficCar
+  - Traffic
+  - Deer
+  - CollSript2
+  - TrackChange
+  - HerdChild
+  - TrackChangeRight
+  - TrackChangeLeft
+  - trainCol
+  - TrackChnage1
+  - AiTrainColMulti
+  - AiTrainMulti
+  - StopPointMulti
+  - RaceTrainStop
+  - Racewin
+  - points
+  - ADS
+  - StartSpline
+  - StaticCamTarget
+  - ShipStart
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Player
+  - PassangerLyer
+  - Map_Lyer
+  - 11
+  - 12
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: "Default"
+    uniqueID: 0
+    locked: 0
