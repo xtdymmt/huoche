@@ -28,6 +28,8 @@ public class GameMaster : MonoBehaviour
 		this.RightIndicatorImgObjjj = this.RightIndicatorImg.gameObject;
 		this.LeftIndicatorImgObjjj = this.LeftIndicatorImg.gameObject;
 		this.PlayerTrainPrefab = this.PlayerTrainArray[PlayerPrefs.GetInt("SelTrainDB")];
+		GameObject.Find("Canvas/PanelRaceBtnsPanel/PauseBtn").GetComponent<RectTransform>().sizeDelta = new Vector2(86, 86);
+		GameObject.Find("Canvas/PanelRaceBtnsPanel/CameraBtnChange").GetComponent<RectTransform>().sizeDelta = new Vector2(86, 86);
 		this.PassangerTrain = UnityEngine.Object.Instantiate<GameObject>(this.PlayerTrainPrefab, this.PlayerTrainPrefab.transform.position, this.PlayerTrainPrefab.transform.rotation);
 		//this.AdCallerScriptComboObj = (AdsCallerManager)UnityEngine.Object.FindObjectOfType(typeof(AdsCallerManager));
 	}
@@ -36,14 +38,14 @@ public class GameMaster : MonoBehaviour
 	{
 		Time.timeScale = 1f;
 		this.Levelcounter = SceneManager.GetActiveScene().buildIndex;
-		Handheld.StopActivityIndicator();
+		//Handheld.StopActivityIndicator();
 		this.TrainMoveScript = (TrainMove)UnityEngine.Object.FindObjectOfType(typeof(TrainMove));
 		this.TrainCollisionScriptScript = (TrainCollisionScript)UnityEngine.Object.FindObjectOfType(typeof(TrainCollisionScript));
-		this.RightIndicator.GetComponent<Button>().onClick.AddListener(delegate()
+		this.RightIndicator.GetComponent<Button>().onClick.AddListener(delegate ()
 		{
 			this.TrainMoveRight();
 		});
-		this.LeftIndicator.GetComponent<Button>().onClick.AddListener(delegate()
+		this.LeftIndicator.GetComponent<Button>().onClick.AddListener(delegate ()
 		{
 			this.TrainMoveLeft();
 		});
@@ -182,14 +184,15 @@ public class GameMaster : MonoBehaviour
 			{
 				if (this.LevelFailedAd)
 				{
-					
-						//this.AdCallerScriptComboObj.RequestBanner();
-						AudioListener.pause = true;
-						PlayerPrefs.SetInt("MaxFailedDB", PlayerPrefs.GetInt("MaxFailedDB") + 1);
-						PlayerPrefs.SetInt("LvlFailedAdCallDB", 1);
-						this.LevelFailedAd = false;
+
+					//this.AdCallerScriptComboObj.RequestBanner();
+					AudioListener.pause = true;
+					PlayerPrefs.SetInt("MaxFailedDB", PlayerPrefs.GetInt("MaxFailedDB") + 1);
+					PlayerPrefs.SetInt("LvlFailedAdCallDB", 1);
+					this.LevelFailedAd = false;
 					Debug.Log("ShowLose");
-					HuaWeiADManager.ShowLose();
+					//HuaWeiADManager.ShowLose();
+					LSC_ADManager.Instance.ShowCustom();
 				}
 				this.RaceBtnPanel.SetActive(false);
 				//#if UNITY_ANDROID && !UNITY_EDITOR
@@ -202,8 +205,8 @@ public class GameMaster : MonoBehaviour
 				//  } 
 
 				//#endif
-				
-                this.MissionFailed.SetActive(true);
+
+				this.MissionFailed.SetActive(true);
 				Time.timeScale = 0f;
 			}
 			if (TrafficCarCollision.MissionFailedBool)
@@ -217,18 +220,18 @@ public class GameMaster : MonoBehaviour
 					this.LevelFailedAd = false;
 				}
 				this.RaceBtnPanel.SetActive(false);
-//#if UNITY_ANDROID && !UNITY_EDITOR
-//        using (AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
-//  {
-//    using (AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity"))
-//     {
-//        jo.Call("ShowLose");
-//     }
-//  } 
-        
-//#endif
+				//#if UNITY_ANDROID && !UNITY_EDITOR
+				//        using (AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+				//  {
+				//    using (AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity"))
+				//     {
+				//        jo.Call("ShowLose");
+				//     }
+				//  } 
 
-                this.MissionFailed.SetActive(true);
+				//#endif
+
+				this.MissionFailed.SetActive(true);
 				Time.timeScale = 0f;
 			}
 			if (SceneManager.GetActiveScene().buildIndex > 28 && SceneManager.GetActiveScene().buildIndex <= 33 && this.PlayerWinCounter == 2 && AiRaceTrain.counter == 2)
@@ -252,7 +255,7 @@ public class GameMaster : MonoBehaviour
 				//  } 
 
 				//#endif
-				
+
 				this.MissionFailed.SetActive(true);
 				Time.timeScale = 0f;
 			}
@@ -262,7 +265,8 @@ public class GameMaster : MonoBehaviour
 	public void DoorsOpenAll()
 	{
 		Debug.Log("ShowOpen");
-		HuaWeiADManager.ShowOpen();
+		//HuaWeiADManager.ShowOpen();
+		LSC_ADManager.Instance.ShowCustom();
 		this.TrainMoveScript.DoorOpenCall();
 		if (this.TrainCollisionScriptScript.TrainStopBoolMulti && this.TrainCollisionScriptScript.TrainStopCounter == 1)
 		{
@@ -317,177 +321,178 @@ public class GameMaster : MonoBehaviour
 
 		//#endif
 		Debug.Log("ShowWin");
-		HuaWeiADManager.ShowWin();
-        this.RaceBtnPanel.SetActive(false);
-			this.MissionComplete.SetActive(true);
-			if (this.LevelClearAd)
-			{
-				//this.AdCallerScriptComboObj.RequestBanner();
+		LSC_ADManager.Instance.ShowCustom();
+		//HuaWeiADManager.ShowWin();
+		this.RaceBtnPanel.SetActive(false);
+		this.MissionComplete.SetActive(true);
+		if (this.LevelClearAd)
+		{
+			//this.AdCallerScriptComboObj.RequestBanner();
 
-				AudioListener.pause = true;
-				PlayerPrefs.SetInt("LvlCompleteAdCallDB", 1);
-				if (SceneManager.GetActiveScene().buildIndex > 0 && SceneManager.GetActiveScene().buildIndex <= 12)
-				{
-					PlayerPrefs.SetInt("HighScoreDB", PlayerPrefs.GetInt("HighScoreDB") + 500);
-					this.ScoreText.text = "500";
-				}
-				else if (SceneManager.GetActiveScene().buildIndex > 12)
-				{
-					PlayerPrefs.SetInt("HighScoreDB", PlayerPrefs.GetInt("HighScoreDB") + 1000);
-					this.ScoreText.text = "1000";
-				}
-				PlayerPrefs.SetInt("PassDropDB", PlayerPrefs.GetInt("PassDropDB") + 12);
-				if (SceneManager.GetActiveScene().buildIndex == 2)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel2", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 3)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel3", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 4)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel4", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 5)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel5", 1);
-					if (PlayerPrefs.GetInt("Achive1DB") == 0)
-					{
-						PlayerPrefs.SetInt("Achive1DB", 1);
-					}
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 6)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel6", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 7)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel7", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 8)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel8", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 9)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel9", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 10)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel10", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 11)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel11", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 12)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel12", 1);
-					if (PlayerPrefs.GetInt("Achive2DB") == 0)
-					{
-						PlayerPrefs.SetInt("Achive2DB", 1);
-					}
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 13)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel13", 1);
-					PlayerPrefs.SetInt("UnlockedLevel13Star", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 14)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel14", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 15)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel15", 1);
-					PlayerPrefs.SetInt("AchivementUnlocked", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 16)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel16", 1);
-				}
-				if (SceneManager.GetActiveScene().buildIndex == 17)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel17", 1);
-					if (PlayerPrefs.GetInt("Achive3DB") == 0)
-					{
-						PlayerPrefs.SetInt("Achive3DB", 1);
-					}
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 18)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel18", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 19)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel19", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 20)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel20", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 21)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel21", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 22)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel22", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 23)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel23", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 24)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel24", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 25)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel25", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 26)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel26", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 27)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel27", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 28)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel28", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 29)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel29", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 30)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel30", 1);
-					PlayerPrefs.SetInt("AchivementUnlocked", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 31)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel31", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 32)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel32", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 33)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel33", 1);
-				}
-				else if (SceneManager.GetActiveScene().buildIndex == 34)
-				{
-					PlayerPrefs.SetInt("UnlockedLevel34", 1);
-					PlayerPrefs.SetInt("AchivementUnlocked", 1);
-				}
-				this.LevelClearAd = false;
+			AudioListener.pause = true;
+			PlayerPrefs.SetInt("LvlCompleteAdCallDB", 1);
+			if (SceneManager.GetActiveScene().buildIndex > 0 && SceneManager.GetActiveScene().buildIndex <= 12)
+			{
+				PlayerPrefs.SetInt("HighScoreDB", PlayerPrefs.GetInt("HighScoreDB") + 500);
+				this.ScoreText.text = "500";
 			}
-		
+			else if (SceneManager.GetActiveScene().buildIndex > 12)
+			{
+				PlayerPrefs.SetInt("HighScoreDB", PlayerPrefs.GetInt("HighScoreDB") + 1000);
+				this.ScoreText.text = "1000";
+			}
+			PlayerPrefs.SetInt("PassDropDB", PlayerPrefs.GetInt("PassDropDB") + 12);
+			if (SceneManager.GetActiveScene().buildIndex == 2)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel2", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 3)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel3", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 4)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel4", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 5)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel5", 1);
+				if (PlayerPrefs.GetInt("Achive1DB") == 0)
+				{
+					PlayerPrefs.SetInt("Achive1DB", 1);
+				}
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 6)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel6", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 7)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel7", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 8)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel8", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 9)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel9", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 10)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel10", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 11)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel11", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 12)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel12", 1);
+				if (PlayerPrefs.GetInt("Achive2DB") == 0)
+				{
+					PlayerPrefs.SetInt("Achive2DB", 1);
+				}
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 13)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel13", 1);
+				PlayerPrefs.SetInt("UnlockedLevel13Star", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 14)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel14", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 15)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel15", 1);
+				PlayerPrefs.SetInt("AchivementUnlocked", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 16)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel16", 1);
+			}
+			if (SceneManager.GetActiveScene().buildIndex == 17)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel17", 1);
+				if (PlayerPrefs.GetInt("Achive3DB") == 0)
+				{
+					PlayerPrefs.SetInt("Achive3DB", 1);
+				}
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 18)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel18", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 19)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel19", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 20)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel20", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 21)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel21", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 22)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel22", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 23)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel23", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 24)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel24", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 25)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel25", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 26)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel26", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 27)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel27", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 28)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel28", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 29)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel29", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 30)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel30", 1);
+				PlayerPrefs.SetInt("AchivementUnlocked", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 31)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel31", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 32)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel32", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 33)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel33", 1);
+			}
+			else if (SceneManager.GetActiveScene().buildIndex == 34)
+			{
+				PlayerPrefs.SetInt("UnlockedLevel34", 1);
+				PlayerPrefs.SetInt("AchivementUnlocked", 1);
+			}
+			this.LevelClearAd = false;
+		}
+
 	}
 
 	private void TrainMoveAgain()
@@ -500,7 +505,8 @@ public class GameMaster : MonoBehaviour
 	public void DoorsClosedAll()
 	{
 		Debug.Log("ShowClose");
-		HuaWeiADManager.ShowClose();
+		//HuaWeiADManager.ShowClose();
+		LSC_ADManager.Instance.ShowCustom();
 		if (this.TrainCollisionScriptScript.TrainStopBoolMulti)
 		{
 			AiRaceTrain.counter = 1;
@@ -517,20 +523,21 @@ public class GameMaster : MonoBehaviour
 	public void Pause_Click()
 	{
 		Debug.Log("ShowPause");
-        ADManagerRPK.Instance.ShowYS();
-        HuaWeiADManager.ShowPause();
-//#if UNITY_ANDROID && !UNITY_EDITOR
-//        using (AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
-//  {
-//    using (AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity"))
-//     {
-//        jo.Call("ShowPause");
-//     }
-//  } 
-        
-//#endif
-        //this.AdCallerScriptComboObj.RequestBanner();
-        PlayerPrefs.SetInt("PauseAdCallDB", 1);
+		// ADManagerRPK.Instance.ShowYS();
+		// HuaWeiADManager.ShowPause();
+		LSC_ADManager.Instance.ShowCustom();
+		//#if UNITY_ANDROID && !UNITY_EDITOR
+		//        using (AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+		//  {
+		//    using (AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity"))
+		//     {
+		//        jo.Call("ShowPause");
+		//     }
+		//  } 
+
+		//#endif
+		//this.AdCallerScriptComboObj.RequestBanner();
+		PlayerPrefs.SetInt("PauseAdCallDB", 1);
 		AudioListener.pause = true;
 		this.RaceBtnPanel.SetActive(false);
 		this.PausePanel.SetActive(true);
@@ -538,42 +545,45 @@ public class GameMaster : MonoBehaviour
 	}
 	//public void ShowRestartButton_Click()
 	//{
- //       Debug.Log("ShowRestart");
- //       MFADManager.ShowVideo = delegate
- //       {
+	//       Debug.Log("ShowRestart");
+	//       MFADManager.ShowVideo = delegate
+	//       {
 	//		Restart_Click();
- //       };
- //   }
+	//       };
+	//   }
 	public void Restart_Click()
 	{
-        HuaWeiADManager.ShowRestart();
-        Debug.Log("ShowRestart");
-        MFADManager.ShowVideo = delegate
-		{
-			RestarScript();
-        };
+		//HuaWeiADManager.ShowRestart();
+		Debug.Log("ShowRestart");
+		// MFADManager.ShowVideo = delegate
+		// {
+		// 	RestarScript();
+		// };
+		LSC_ADManager.Instance.ShowCustom();
+		RestarScript();
 	}
 	//public void testClick()
 	//{
- //       RestarScript();
- //   }
+	//       RestarScript();
+	//   }
 	public void RestarScript()
 	{
-        this.LoadingPanel.SetActive(true);
-        AudioListener.pause = false;
-        this.TrainCollisionScriptScript.MissionFailedBool = false;
-        base.StartCoroutine(this.Load());
-        if (PlayerPrefs.GetString("Sound Status") == "True")
-        {
-            base.GetComponent<AudioSource>().PlayOneShot(this.btn_click, 1f);
-        }
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+		this.LoadingPanel.SetActive(true);
+		AudioListener.pause = false;
+		this.TrainCollisionScriptScript.MissionFailedBool = false;
+		base.StartCoroutine(this.Load());
+		if (PlayerPrefs.GetString("Sound Status") == "True")
+		{
+			base.GetComponent<AudioSource>().PlayOneShot(this.btn_click, 1f);
+		}
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+	}
 	public void Menu_Click()
 	{
 		Debug.Log("ShowMenu");
-        ADManagerRPK.Instance.ShowYS();
-        HuaWeiADManager.ShowMenu();
+		// ADManagerRPK.Instance.ShowYS();
+		// HuaWeiADManager.ShowMenu();
+		LSC_ADManager.Instance.ShowCustom();
 		GameMaster.LoadAd = false;
 		this.LoadingPanel.SetActive(true);
 		AudioListener.pause = false;
@@ -602,7 +612,8 @@ public class GameMaster : MonoBehaviour
 	public void Next()
 	{
 		Debug.Log("ShowNextLevel");
-		HuaWeiADManager.ShowNextLevel();
+		//HuaWeiADManager.ShowNextLevel();
+		LSC_ADManager.Instance.ShowCustom();
 		GameMaster.LoadAd = false;
 		this.LoadingPanel.SetActive(true);
 		if (PlayerPrefs.GetString("Sound Status") == "True")
@@ -638,8 +649,8 @@ public class GameMaster : MonoBehaviour
 
 	private IEnumerator Load()
 	{
-		Handheld.SetActivityIndicatorStyle(AndroidActivityIndicatorStyle.Small);
-		Handheld.StartActivityIndicator();
+		//Handheld.SetActivityIndicatorStyle(AndroidActivityIndicatorStyle.Small);
+		//Handheld.StartActivityIndicator();
 		yield return new WaitForSeconds(0f);
 		yield break;
 	}
@@ -729,12 +740,12 @@ public class GameMaster : MonoBehaviour
 
 	public void RateUS_Click_Btn()
 	{
-		
+
 	}
 
 	public void RateUS_Cross_Btn()
 	{
-	
+
 	}
 
 	public void TrainMoveRight()

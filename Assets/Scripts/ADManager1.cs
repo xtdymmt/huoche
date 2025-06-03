@@ -13,6 +13,7 @@ public class ADManager1 : MonoBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         Debug.Log("ShowButton1");
-        HuaWeiADManager.ShowButton1();
+        //HuaWeiADManager.ShowButton1();
+        LSC_ADManager.Instance.ShowCustom();
     }
 }

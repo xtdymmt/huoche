@@ -91,7 +91,7 @@ public class TrainCollisionScript : MonoBehaviour
 		{
 			if (PlayerPrefs.GetString("Vibration") == "True")
 			{
-				Handheld.Vibrate();
+				//Handheld.Vibrate();
 			}
 			GameObject obj = UnityEngine.Object.Instantiate<GameObject>(this.Metal_effectPrefab, this.MetalEffectPos.transform.position, this.MetalEffectPos.transform.rotation);
 			UnityEngine.Object.Destroy(obj, 0.45f);
@@ -102,7 +102,7 @@ public class TrainCollisionScript : MonoBehaviour
 		{
 			if (PlayerPrefs.GetString("Vibration") == "True")
 			{
-				Handheld.Vibrate();
+				//Handheld.Vibrate();
 			}
 			GameObject obj2 = UnityEngine.Object.Instantiate<GameObject>(this.Metal_effectPrefab, this.MetalEffectPos.transform.position, this.MetalEffectPos.transform.rotation);
 			UnityEngine.Object.Destroy(obj2, 0.45f);
@@ -118,7 +118,7 @@ public class TrainCollisionScript : MonoBehaviour
 		{
 			if (PlayerPrefs.GetString("Vibration") == "True")
 			{
-				Handheld.Vibrate();
+				//Handheld.Vibrate();
 			}
 			base.Invoke("DelayTrafficAccident", 0.2f);
 		}
@@ -142,7 +142,7 @@ public class TrainCollisionScript : MonoBehaviour
 			base.Invoke("LevelFailDelay", 3.5f);
 			if (PlayerPrefs.GetString("Vibration") == "True")
 			{
-				Handheld.Vibrate();
+				//Handheld.Vibrate();
 			}
 		}
 		if (other.gameObject.tag == "Traffic")
@@ -157,7 +157,7 @@ public class TrainCollisionScript : MonoBehaviour
 			base.Invoke("DelayTrafficAccident", 0.2f);
 			if (PlayerPrefs.GetString("Vibration") == "True")
 			{
-				Handheld.Vibrate();
+				//Handheld.Vibrate();
 			}
 		}
 		if (other.gameObject.tag == "trainCol")
@@ -170,7 +170,7 @@ public class TrainCollisionScript : MonoBehaviour
 			UnityEngine.Object.Destroy(obj3, 0.45f);
 			if (PlayerPrefs.GetString("Vibration") == "True")
 			{
-				Handheld.Vibrate();
+				//Handheld.Vibrate();
 			}
 			base.Invoke("DelayTrafficAccident", 0.2f);
 		}

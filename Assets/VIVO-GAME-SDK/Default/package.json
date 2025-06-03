@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "server": "mg-service server",
-    "build": "mg-service build",
+    "build": "mg-service release",
     "release": "mg-service release",
     "watch": "mg-service watch"
   },

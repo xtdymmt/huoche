@@ -9,27 +9,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9d5b661d67943f4e8aff6731048f1a9, type: 3}
+  m_Script: {fileID: 1024376594, guid: c435a430d9e7e5743a2d8a47c6d78363, type: 3}
   m_Name: QGGameConfig
   m_EditorClassIdentifier: 
   envConfig:
+    icon: 
+    package: com.szbh.kcwqn.vivominigame
+    name: "\u5F00\u8F66\u6211\u5168\u80FD"
+    versionName: 1.0.0
+    versionCode: 1
+    minPlatformVersion: 1103
+    deviceOrientation: landscape
+    bgImageSrc: Assets/LSC_RPKAD/UI/ysxy/horizontal.png
     wasmUrl: 
+    wasmDataUrl: 
+    assistWasmUrl: 
     streamingAssetsUrl: 
     preloadUrl: 
     subUnityPkg: 0
-  buildSrc: D:/unity_rpk/hitRagdoll/1.0
-  PackageName: com.hlsk.egzgzj.vivominigame
-  GameName: "\u6076\u641E\u6574\u86CA\u4E13\u5BB6"
-  versionName: 1.0.0
-  minPlatformVersion: 1105
-  deviceOrientation: landscape
+  buildSrc: D:/work/Project/UnityProject/HuoChe/Build/vivo
   cliSrc: 
-  assetsUrl1: 
-  assetsUrl2: 
-  assetsUrl3: 
-  assetsUrl4: 
-  assetsUrl5: 
   useSelfLoading: 0
-  useSubPkgLoading: 0
+  useSubPkgLoading: 1
   useAddressable: 0
   usePreAsset: 0
+  useWebgl2: 0
+  useCodeSize: 0
+  usTargetBgType: 1

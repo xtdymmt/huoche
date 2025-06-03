@@ -57,7 +57,7 @@ public class TrainCollisionScript2 : MonoBehaviour
 		{
 			if (PlayerPrefs.GetString("Vibration") == "True")
 			{
-				Handheld.Vibrate();
+				//Handheld.Vibrate();
 			}
 			GameObject obj = UnityEngine.Object.Instantiate<GameObject>(this.Metal_effectPrefab, this.MetalEffectPos.transform.position, this.MetalEffectPos.transform.rotation);
 			UnityEngine.Object.Destroy(obj, 0.45f);
@@ -102,7 +102,7 @@ public class TrainCollisionScript2 : MonoBehaviour
 		this.TrainManager.SetActive(false);
 		if (PlayerPrefs.GetString("Vibration") == "True")
 		{
-			Handheld.Vibrate();
+			//Handheld.Vibrate();
 		}
 		base.Invoke("LevelFailDelay", 6.5f);
 	}

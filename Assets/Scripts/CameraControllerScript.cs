@@ -46,7 +46,8 @@ public class CameraControllerScript : MonoBehaviour
 	public void AnimationCam_False()
 	{
 		Debug.Log("ShowSkip");
-		HuaWeiADManager.ShowSkip();
+		//HuaWeiADManager.ShowSkip();
+		LSC_ADManager.Instance.ShowCustom();
         base.CancelInvoke("AnimationCam_False");
 		this.DoorBtnsPanel.SetActive(true);
 		this.StaticCameraObj.enabled = true;

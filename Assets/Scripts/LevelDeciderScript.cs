@@ -14,7 +14,7 @@ public class LevelDeciderScript : MonoBehaviour
 
 	private void Start()
 	{
-		Handheld.StartActivityIndicator();
+		////Handheld.StartActivityIndicator();
 	}
 
 	private void Update()
@@ -35,14 +35,14 @@ public class LevelDeciderScript : MonoBehaviour
 
 	private void DelayLodingFalse()
 	{
-		Handheld.StopActivityIndicator();
+		////Handheld.StopActivityIndicator();
 		this.LoadingStuffs.SetActive(false);
 	}
 
 	private IEnumerator Load()
 	{
-		Handheld.SetActivityIndicatorStyle(AndroidActivityIndicatorStyle.Small);
-		Handheld.StartActivityIndicator();
+		////Handheld.SetActivityIndicatorStyle(AndroidActivityIndicatorStyle.Small);
+		////Handheld.StartActivityIndicator();
 		yield return new WaitForSeconds(0f);
 		yield break;
 	}

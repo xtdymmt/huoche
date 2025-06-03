@@ -19,7 +19,7 @@ public class LevelEnvIns : MonoBehaviour
 	{
 		this.TerrianObj = UnityEngine.Object.Instantiate<GameObject>(this.TerrianObj, this.TerrianObj.transform.position, this.TerrianObj.transform.rotation);
 		this.LoadingPanel.SetActive(false);
-		Handheld.StopActivityIndicator();
+		//Handheld.StopActivityIndicator();
 		if (PlayerPrefs.GetInt("AchivementUnlocked") == 1)
 		{
 			this.AchievemntPanelMsG.SetActive(true);
@@ -29,8 +29,8 @@ public class LevelEnvIns : MonoBehaviour
 
 	private IEnumerator Load()
 	{
-		Handheld.SetActivityIndicatorStyle(AndroidActivityIndicatorStyle.InversedLarge);
-		Handheld.StartActivityIndicator();
+		//Handheld.SetActivityIndicatorStyle(AndroidActivityIndicatorStyle.InversedLarge);
+		//Handheld.StartActivityIndicator();
 		yield return new WaitForSeconds(0f);
 		yield break;
 	}

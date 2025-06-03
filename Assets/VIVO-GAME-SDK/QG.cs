@@ -6,7 +6,6 @@ namespace QGMiniGame
 {
     public class QG
     {
-        public static int SDK_VERSION = 8;
 
         #region Login  登录
         // http://minigame.vivo.com.cn/documents/#/api/service/newaccount?id=login
@@ -29,6 +28,18 @@ namespace QGMiniGame
         public static void GetUserInfo(Action<QGCommonResponse<QGUserInfoBean>> succCallback = null, Action<QGCommonResponse<QGUserInfoBean>> failCallback = null)
         {
             QGMiniGameManager.Instance.GetUserInfo(succCallback, failCallback);
+        }
+        #endregion
+
+        #region GetSystemInfo 获取系统信息
+        // https://minigame.vivo.com.cn/documents/#/api/system/system-info?id=qggetsysteminfoobject-object
+        public static void GetSystemInfo(Action<QGCommonResponse<string>> succCallback = null, Action<QGCommonResponse<string>> failCallback = null)
+        {
+            QGMiniGameManager.Instance.GetSystemInfo(succCallback, failCallback);
+        }
+        public static string GetSystemInfoSync()
+        {
+           return QGMiniGameManager.Instance.GetSystemInfoSync();
         }
         #endregion
 
@@ -351,6 +362,15 @@ namespace QGMiniGame
         }
         #endregion
 
+        #region ReadFileSync 同步读取文件
+        //https://minigame.vivo.com.cn/documents/#/api/data/file?id=qgreadfilesyncobject-object-1031
+        // 注意uri格式，请参考 http://minigame.vivo.com.cn/documents/#/api/data/file-system
+        public static QGFileInfo ReadFileSync(QGFileParam param)
+        {
+            return QGMiniGameManager.Instance.ReadFileSync(param);
+        }
+        #endregion
+
         #region WriteFile 写入文件
         //http://minigame.vivo.com.cn/documents/#/api/data/file?id=qgwritefileobject-object
         // 注意uri格式，请参考 http://minigame.vivo.com.cn/documents/#/api/data/file-system
@@ -368,6 +388,24 @@ namespace QGMiniGame
         public static void WriteFile(QGFileParam param, Action<QGFileResponse> successCallback = null, Action<QGFileResponse> failCallback = null)
         {
             QGMiniGameManager.Instance.WriteFile(param, successCallback, failCallback);
+        }
+        #endregion
+
+        #region WriteFileSync 写入文件 同步方法
+        //http://minigame.vivo.com.cn/documents/#/api/data/file?id=qgwritefileobject-object
+        // 注意uri格式，请参考 http://minigame.vivo.com.cn/documents/#/api/data/file-system
+        /*QGFileParam param = new QGFileParam()
+        {
+            uri = "internal://files/hehe.txt",
+            encoding = "utf8",
+            textStr = "你是谁啊 "
+        };
+        QG.WriteFileSync(
+            param
+        );*/
+        public static string WriteFileSync(QGFileParam param)
+        {
+            return QGMiniGameManager.Instance.WriteFileSync(param);
         }
         #endregion
 
@@ -424,10 +462,47 @@ namespace QGMiniGame
 
         #endregion
 
-        #region 提示信息
-        public static void ShowToast(string message)
+        #region V订阅
+        public static void Subscribe(SubscribeParam param, Action<QGBaseResponse> successCallback = null, Action<QGBaseResponse> failCallback = null)
         {
-            QGMiniGameManager.Instance.ShowToast(message);
+            QGMiniGameManager.Instance.Subscribe(param, successCallback, failCallback);
+        }
+
+        public static void GetStatus(Action<QGBaseResponse> successCallback = null, Action<QGBaseResponse> failCallback = null)
+        {
+            QGMiniGameManager.Instance.GetStatus(successCallback, failCallback);
+        }
+
+        public static void UnSubscribe(SubscribeParam param, Action<QGBaseResponse> successCallback = null, Action<QGBaseResponse> failCallback = null)
+        {
+            QGMiniGameManager.Instance.UnSubscribe(param, successCallback, failCallback);
+        }
+
+        public static void IsRelationExist(SubscribeParam param, Action<QGBaseResponse> successCallback = null, Action<QGBaseResponse> failCallback = null)
+        {
+            QGMiniGameManager.Instance.IsRelationExist(param, successCallback, failCallback);
+        }
+
+        #endregion
+
+        #region IsVivoRuntime 判断是否是vivo运行环境
+        // https://minigame.vivo.com.cn/documents/#/api/service/provider
+        //bool isVivoRuntime = QG.IsVivoRuntime();
+        public static bool IsVivoRuntime()
+        {
+            return QGMiniGameManager.Instance.IsVivoRuntime();
+        }
+        #endregion
+
+        #region Get/SetSystemInfo 剪贴板
+        // https://minigame.vivo.com.cn/documents/#/api/device/clipboard?id=qgsetclipboarddataobject-object
+        public static void SetClipboardData(string text, Action<QGBaseResponse> succCallback = null, Action<QGBaseResponse> failCallback = null)
+        {
+            QGMiniGameManager.Instance.SetClipboardData(text, succCallback, failCallback);
+        }
+        public static void GetClipboardData(Action<QGCommonResponse<string>> succCallback = null, Action<QGCommonResponse<string>> failCallback = null)
+        {
+            QGMiniGameManager.Instance.GetClipboardData(succCallback, failCallback);
         }
         #endregion
     }

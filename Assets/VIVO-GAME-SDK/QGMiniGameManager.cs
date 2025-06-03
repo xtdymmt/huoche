@@ -46,6 +46,22 @@ namespace QGMiniGame
 
         #endregion
 
+
+        // 系统API
+        #region 获取系统信息
+        public void GetSystemInfo(Action<QGCommonResponse<string>> successCallback = null, Action<QGCommonResponse<string>> failCallback = null)
+        {
+            QGGetSystemInfo(QGCallBackManager.Add(successCallback), QGCallBackManager.Add(failCallback));
+        }
+
+
+        public string GetSystemInfoSync()
+        {
+            return QGGetSystemInfoSync();
+        }
+
+        #endregion
+
         #region 获取桌面图标是否创建
 
         public void HasShortcutInstalled(Action<QGCommonResponse<QGShortcutBean>> successCallback = null, Action<QGCommonResponse<QGShortcutBean>> failCallback = null)
@@ -260,10 +276,34 @@ namespace QGMiniGame
         }
         #endregion
 
+        #region 同步读取文件
+        public QGFileInfo ReadFileSync(QGFileParam param)
+        {
+            string msg = QGReadFileSync(param.uri, param.encoding, param.position, param.length);
+            QGFileResponse res = JsonUtility.FromJson<QGFileResponse>(msg);
+            QGFileInfo fileInfo = new QGFileInfo();
+            fileInfo.textStr = res.textStr;
+            if (res.encoding != "utf8")
+            {
+                var fileBuffer = new byte[res.byteLength];
+                QGGetFileBuffer(fileBuffer, res.callbackId);
+                fileInfo.textData = fileBuffer;
+            }
+            return fileInfo;
+        }
+        #endregion
+
         #region 写入文件
         public void WriteFile(QGFileParam param, Action<QGFileResponse> successCallback = null, Action<QGFileResponse> failCallback = null)
         {
             QGWriteFile(param.uri, param.encoding, param.position, param.textStr, param.textData, param.textData == null ? 0 : param.textData.Length, QGCallBackManager.Add(successCallback), QGCallBackManager.Add(failCallback));
+        }
+        #endregion
+        
+        #region 写入文件同步方法
+        public string WriteFileSync(QGFileParam param)
+        {
+            return QGWriteFileSync(param.uri, param.encoding, param.position, param.textStr, param.textData, param.textData == null ? 0 : param.textData.Length);
         }
         #endregion
 
@@ -318,13 +358,6 @@ namespace QGMiniGame
         }
         #endregion
 
-        #region 提示信息
-        public void ShowToast(string message)
-        {
-            QGShowToast(message);
-        }
-        #endregion
-
         #region 退出游戏
         public void ExitApplication()
         {
@@ -332,6 +365,57 @@ namespace QGMiniGame
         }
         #endregion
 
+        #region V订阅
+        public void Subscribe(SubscribeParam param, Action<QGBaseResponse> successCallback = null, Action<QGBaseResponse> failCallback = null)
+        {
+            QGSubscribe(param.templateIds, param.clientId, param.userId, param.scene, param.type, param.subDesc, QGCallBackManager.Add(successCallback), QGCallBackManager.Add(failCallback));
+        }
+
+        public void GetStatus(Action<QGBaseResponse> successCallback = null, Action<QGBaseResponse> failCallback = null)
+        {
+            QGGetStatus(QGCallBackManager.Add(successCallback), QGCallBackManager.Add(failCallback));
+        }
+
+        public void UnSubscribe(SubscribeParam param, Action<QGBaseResponse> successCallback = null, Action<QGBaseResponse> failCallback = null)
+        {
+            QGUnSubscribe(param.templateIds, param.clientId, param.userId, param.scene, param.type, param.subDesc, QGCallBackManager.Add(successCallback), QGCallBackManager.Add(failCallback));
+        }
+
+        public void IsRelationExist(SubscribeParam param, Action<QGBaseResponse> successCallback = null, Action<QGBaseResponse> failCallback = null)
+        {
+            QGIsRelationExist(param.templateIds, param.clientId, param.userId, param.scene, param.type, param.subDesc, QGCallBackManager.Add(successCallback), QGCallBackManager.Add(failCallback));
+        }
+
+        #endregion
+
+        #region 判断当前是否是vivo环境
+
+        public bool IsVivoRuntime()
+        {
+            return QGIsVivoRuntime();
+        }
+        #endregion
+
+        // 设备API
+        #region 修改/读取剪贴板内容
+        public void SetClipboardData(string text, Action<QGBaseResponse> successCallback = null, Action<QGBaseResponse> failCallback = null)
+        {
+            QGSetClipboardData(text, QGCallBackManager.Add(successCallback), QGCallBackManager.Add(failCallback));
+        }
+
+        public void GetClipboardData(Action<QGCommonResponse<string>> successCallback = null, Action<QGCommonResponse<string>> failCallback = null)
+        {
+            QGGetClipboardData(QGCallBackManager.Add(successCallback), QGCallBackManager.Add(failCallback));
+        }
+        #endregion
+
+        //设置帧率
+        #region 
+        public void SetPreferredFramesPerSecond(int fps)
+        {
+            QGSetPreferredFramesPerSecond(fps);
+        }
+        #endregion
 
         #region JS回调
         public void LoginResponseCallback(string msg)
@@ -464,9 +548,25 @@ namespace QGMiniGame
             }
         }
 
+        public void GetSystemInfoCallback(string msg)
+        {
+            QGCallBackManager.InvokeResponseCallback<QGCommonResponse<string>>(msg);
+        }
+
+        public void SetClipboardDataCallback(string msg)
+        {
+            QGCallBackManager.InvokeResponseCallback<QGBaseResponse>(msg);
+        }
+
+        public void GetClipboardDataCallback(string msg)
+        {
+            QGCallBackManager.InvokeResponseCallback<QGCommonResponse<string>>(msg);
+        }
+
         #endregion
-
-
+	
+	    [DllImport("__Internal")]
+        private static extern void QGCollectIndex(int index);
 
         [DllImport("__Internal")]
         private static extern void QGLogin(string s, string f);
@@ -479,6 +579,12 @@ namespace QGMiniGame
 
         [DllImport("__Internal")]
         private static extern void QGInstallShortcut(string m, string s, string f);
+
+        [DllImport("__Internal")]
+        private static extern void QGGetSystemInfo(string s, string f);
+
+        [DllImport("__Internal")]
+        private static extern string QGGetSystemInfoSync();
 
         [DllImport("__Internal")]
         private static extern void QGCreateBannerAd(string a, string p, string s, int i);
@@ -559,10 +665,16 @@ namespace QGMiniGame
         private static extern void QGReadFile(string u, string e, int p, int l, string s, string f);
 
         [DllImport("__Internal")]
+        private static extern string QGReadFileSync(string u, string e, int p, int l);
+
+        [DllImport("__Internal")]
         private static extern void QGGetFileBuffer(byte[] d, string c);
 
         [DllImport("__Internal")]
         private static extern void QGWriteFile(string u, string e, int p, string t, byte[] d, int l, string c, string f);
+        
+        [DllImport("__Internal")]
+        private static extern string QGWriteFileSync(string u, string e, int p, string t, byte[] d, int l);
 
         [DllImport("__Internal")]
         private static extern void QGShowKeyboard(string p, string s, string c, string o);
@@ -581,7 +693,29 @@ namespace QGMiniGame
 
         [DllImport("__Internal")]
         private static extern void QGExitApplication();
+
         [DllImport("__Internal")]
-        private static extern void QGShowToast(string message);
+        private static extern void QGSubscribe(string t, string c, string u, string s, int h, string l, string success, string fail);
+
+        [DllImport("__Internal")]
+        private static extern void QGGetStatus(string s, string f);
+
+        [DllImport("__Internal")]
+        private static extern void QGUnSubscribe(string t, string c, string u, string s, int h, string l, string success, string fail);
+
+        [DllImport("__Internal")]
+        private static extern void QGIsRelationExist(string t, string c, string u, string s, int h, string l, string success, string fail);
+
+        [DllImport("__Internal")]
+        private static extern bool QGIsVivoRuntime();
+
+        [DllImport("__Internal")]
+        private static extern void QGSetClipboardData(string p, string s, string f);
+
+        [DllImport("__Internal")]
+        private static extern void QGGetClipboardData(string s, string f);
+        
+        [DllImport("__Internal")]
+        private static extern void QGSetPreferredFramesPerSecond(int p);
     }
 }

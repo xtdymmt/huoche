@@ -29,14 +29,14 @@ public class MenuScript : MonoBehaviour
 	private void Start()
 	{
 		Time.timeScale = 1f;
-		Handheld.StopActivityIndicator();
+		//Handheld.StopActivityIndicator();
 		if (Application.platform == RuntimePlatform.Android)
 		{
 			//PlayGamesPlatform.DebugLogEnabled = true;
 			//PlayGamesPlatform.Activate();
 			if (!MenuScript.LoginBool)
 			{
-				Social.localUser.Authenticate(delegate(bool success)
+				Social.localUser.Authenticate(delegate (bool success)
 				{
 					if (success)
 					{
@@ -139,19 +139,19 @@ public class MenuScript : MonoBehaviour
 		{
 			if (Social.localUser.authenticated)
 			{
-				Social.ReportScore((long)PlayerPrefs.GetInt("HighScoreDB"), this.HighScoreleaderBoardIDAndroid, delegate(bool success)
+				Social.ReportScore((long)PlayerPrefs.GetInt("HighScoreDB"), this.HighScoreleaderBoardIDAndroid, delegate (bool success)
 				{
 				});
 			}
 			if (Social.localUser.authenticated)
 			{
-				Social.ReportScore((long)PlayerPrefs.GetInt("PassDropDB"), this.MaxPassangerDropleaderBoardIDAndroid, delegate(bool success)
+				Social.ReportScore((long)PlayerPrefs.GetInt("PassDropDB"), this.MaxPassangerDropleaderBoardIDAndroid, delegate (bool success)
 				{
 				});
 			}
 			if (Social.localUser.authenticated)
 			{
-				Social.ReportScore((long)PlayerPrefs.GetInt("MaxFailedDB"), this.MaxLevelFailedleaderBoardIDAndroid, delegate(bool success)
+				Social.ReportScore((long)PlayerPrefs.GetInt("MaxFailedDB"), this.MaxLevelFailedleaderBoardIDAndroid, delegate (bool success)
 				{
 				});
 			}
@@ -160,7 +160,7 @@ public class MenuScript : MonoBehaviour
 				PlayerPrefs.SetInt("HighScoreDB", PlayerPrefs.GetInt("HighScoreDB") + 2000);
 				if (Social.localUser.authenticated)
 				{
-					Social.ReportProgress(this.RookieAchIDAndroid, 100.0, delegate(bool success)
+					Social.ReportProgress(this.RookieAchIDAndroid, 100.0, delegate (bool success)
 					{
 					});
 				}
@@ -171,7 +171,7 @@ public class MenuScript : MonoBehaviour
 				PlayerPrefs.SetInt("HighScoreDB", PlayerPrefs.GetInt("HighScoreDB") + 5000);
 				if (Social.localUser.authenticated)
 				{
-					Social.ReportProgress(this.ProAchIDAndroid, 100.0, delegate(bool success)
+					Social.ReportProgress(this.ProAchIDAndroid, 100.0, delegate (bool success)
 					{
 					});
 				}
@@ -182,7 +182,7 @@ public class MenuScript : MonoBehaviour
 				PlayerPrefs.SetInt("HighScoreDB", PlayerPrefs.GetInt("HighScoreDB") + 8000);
 				if (Social.localUser.authenticated)
 				{
-					Social.ReportProgress(this.EliteAchIDAndroid, 100.0, delegate(bool success)
+					Social.ReportProgress(this.EliteAchIDAndroid, 100.0, delegate (bool success)
 					{
 					});
 				}
@@ -240,8 +240,9 @@ public class MenuScript : MonoBehaviour
 	public void AnimPlay_Click()
 	{
 		Debug.Log("ShowOnPlay");
-        ADManagerRPK.Instance.ShowYS();
-        HuaWeiADManager.ShowOnPlay();
+		// ADManagerRPK.Instance.ShowYS();
+		// HuaWeiADManager.ShowOnPlay();
+		LSC_ADManager.Instance.ShowCustom();
 		this.AnimaPanel.SetActive(false);
 		this.DronAnim.SetActive(false);
 		this.MainCam.SetActive(true);
@@ -266,8 +267,9 @@ public class MenuScript : MonoBehaviour
 	public void Garage_Click()
 	{
 		Debug.Log("ShowOnGarage");
-        ADManagerRPK.Instance.ShowYS();
-        HuaWeiADManager.ShowOnGarage();
+		//ADManagerRPK.Instance.ShowYS();
+		//HuaWeiADManager.ShowOnGarage();
+		LSC_ADManager.Instance.ShowCustom();
 		this.GaragePanel.SetActive(true);
 		this.MenuPanel.SetActive(false);
 		this.EasyModeLevelsPanel.SetActive(false);
@@ -370,36 +372,37 @@ public class MenuScript : MonoBehaviour
 		}
 	}
 
-    public void ExitGame()
-    {
-//#if UNITY_ANDROID && !UNITY_EDITOR
-//        using (AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
-//  {
-//    using (AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity"))
-//     {
-//        jo.Call("U3DToAndroidExit");
-//     }
-//  } 
-        
-//#endif
-Application.Quit();
-    }
-    public void CareerMode_Click()
+	public void ExitGame()
+	{
+		//#if UNITY_ANDROID && !UNITY_EDITOR
+		//        using (AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+		//  {
+		//    using (AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity"))
+		//     {
+		//        jo.Call("U3DToAndroidExit");
+		//     }
+		//  } 
+
+		//#endif
+		Application.Quit();
+	}
+	public void CareerMode_Click()
 	{
 		Debug.Log("ShowCareer");
-        ADManagerRPK.Instance.ShowYS();
-        HuaWeiADManager.ShowCareer();
-//#if UNITY_ANDROID && !UNITY_EDITOR
-//        using (AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
-//  {
-//    using (AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity"))
-//     {
-//        jo.Call("ShowPause");
-//     }
-//  } 
-        
-//#endif
-        this.MenuPanel.SetActive(false);
+		// ADManagerRPK.Instance.ShowYS();
+		// HuaWeiADManager.ShowCareer();
+		LSC_ADManager.Instance.ShowCustom();
+		//#if UNITY_ANDROID && !UNITY_EDITOR
+		//        using (AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+		//  {
+		//    using (AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity"))
+		//     {
+		//        jo.Call("ShowPause");
+		//     }
+		//  } 
+
+		//#endif
+		this.MenuPanel.SetActive(false);
 		this.EasyModeLevelsPanel.SetActive(true);
 		this.ChallangeModeLevelsPanel.SetActive(false);
 		this.RaceModeLevelsPanel.SetActive(false);
@@ -428,8 +431,9 @@ Application.Quit();
 	public void ChallangeMode_Click()
 	{
 		Debug.Log("ShowChallenge");
-        ADManagerRPK.Instance.ShowYS();
-        HuaWeiADManager.ShowChallenge();
+		// ADManagerRPK.Instance.ShowYS();
+		// HuaWeiADManager.ShowChallenge();
+		LSC_ADManager.Instance.ShowCustom();
 		if (PlayerPrefs.GetInt("UnlockedLevel5") == 1 || PlayerPrefs.GetInt("ChallengeLvlPurchased") == 1)
 		{
 			this.MenuPanel.SetActive(false);
@@ -510,7 +514,7 @@ Application.Quit();
 
 	public void Level3_Click()
 	{
-		
+
 		if (PlayerPrefs.GetInt("UnlockedLevel3") == 1)
 		{
 			this.LevelCounter = 4;
@@ -528,7 +532,7 @@ Application.Quit();
 
 	public void Level4_Click()
 	{
-		
+
 		if (PlayerPrefs.GetInt("UnlockedLevel4") == 1)
 		{
 			this.LevelCounter = 5;
@@ -546,7 +550,7 @@ Application.Quit();
 
 	public void Level5_Click()
 	{
-		
+
 		if (PlayerPrefs.GetInt("UnlockedLevel5") == 1)
 		{
 			this.LevelCounter = 6;
@@ -564,7 +568,7 @@ Application.Quit();
 
 	public void Level6_Click()
 	{
-		
+
 		if (PlayerPrefs.GetInt("UnlockedLevel6") == 1)
 		{
 			this.LevelCounter = 7;
@@ -582,7 +586,7 @@ Application.Quit();
 
 	public void Level7_Click()
 	{
-		
+
 		if (PlayerPrefs.GetInt("UnlockedLevel7") == 1)
 		{
 			this.LevelCounter = 8;
@@ -600,7 +604,7 @@ Application.Quit();
 
 	public void Level8_Click()
 	{
-		
+
 		if (PlayerPrefs.GetInt("UnlockedLevel8") == 1)
 		{
 			this.LevelCounter = 9;
@@ -618,7 +622,7 @@ Application.Quit();
 
 	public void Level9_Click()
 	{
-		
+
 		if (PlayerPrefs.GetInt("UnlockedLevel9") == 1)
 		{
 			this.LevelCounter = 10;
@@ -636,7 +640,7 @@ Application.Quit();
 
 	public void Level10_Click()
 	{
-		
+
 		if (PlayerPrefs.GetInt("UnlockedLevel10") == 1)
 		{
 			this.LevelCounter = 11;
@@ -654,7 +658,7 @@ Application.Quit();
 
 	public void Level11_Click()
 	{
-		
+
 		if (PlayerPrefs.GetInt("UnlockedLevel11") == 1)
 		{
 			this.LevelCounter = 12;
@@ -672,7 +676,7 @@ Application.Quit();
 
 	public void Level12_Click()
 	{
-		
+
 		if (PlayerPrefs.GetInt("UnlockedLevel12") == 1)
 		{
 			this.LevelCounter = 13;
@@ -690,7 +694,7 @@ Application.Quit();
 
 	public void Level13_Click()
 	{
-		
+
 		if (PlayerPrefs.GetInt("UnlockedLevel13") == 1)
 		{
 			this.LevelCounter = 14;
@@ -708,7 +712,7 @@ Application.Quit();
 
 	public void Level14_Click()
 	{
-		
+
 		if (PlayerPrefs.GetInt("UnlockedLevel14") == 1)
 		{
 			this.LevelCounter = 15;
@@ -726,7 +730,7 @@ Application.Quit();
 
 	public void Level15_Click()
 	{
-		
+
 		if (PlayerPrefs.GetInt("UnlockedLevel15") == 1)
 		{
 			this.LevelCounter = 16;
@@ -758,7 +762,7 @@ Application.Quit();
 
 	public void Level17_Click()
 	{
-		
+
 		if (PlayerPrefs.GetInt("UnlockedLevel17") == 1)
 		{
 			this.LevelCounter = 18;
@@ -793,7 +797,7 @@ Application.Quit();
 
 	public void Level19_Click()
 	{
-		
+
 		if (PlayerPrefs.GetInt("UnlockedLevel19") == 1)
 		{
 			this.LevelCounter = 20;
@@ -811,7 +815,7 @@ Application.Quit();
 
 	public void Level20_Click()
 	{
-		
+
 		if (PlayerPrefs.GetInt("UnlockedLevel20") == 1)
 		{
 			this.LevelCounter = 21;
@@ -1072,8 +1076,8 @@ Application.Quit();
 
 	private IEnumerator Load()
 	{
-		Handheld.SetActivityIndicatorStyle(AndroidActivityIndicatorStyle.Small);
-		Handheld.StartActivityIndicator();
+		//Handheld.SetActivityIndicatorStyle(AndroidActivityIndicatorStyle.Small);
+		//Handheld.StartActivityIndicator();
 		yield return new WaitForSeconds(0f);
 		yield break;
 	}
@@ -1290,7 +1294,7 @@ Application.Quit();
 		}
 	}
 
-	
+
 
 	public void CarRaceBtn_Click()
 	{
@@ -1358,7 +1362,7 @@ Application.Quit();
 	public void RightClick_Btn()
 	{
 		Debug.Log("ShowRight");
-		HuaWeiADManager.ShowRight();
+		//HuaWeiADManager.ShowRight();
 		if (this.CarCounter >= 6)
 		{
 			this.CarCounter = 6;
@@ -1376,7 +1380,7 @@ Application.Quit();
 	public void LeftClick_Btn()
 	{
 		Debug.Log("ShowRight");
-		HuaWeiADManager.ShowRight();
+		//HuaWeiADManager.ShowRight();
 		if (this.CarCounter <= 0)
 		{
 			this.CarCounter = 0;

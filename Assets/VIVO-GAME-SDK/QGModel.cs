@@ -150,6 +150,12 @@ namespace QGMiniGame
         public byte[] textData; // 写入的二进制数据
     }
 
+    public class QGFileInfo 
+    {
+        public string textStr;
+        public byte[] textData;
+    }
+
     public class KeyboardParam
     {
         public string defaultValue; //键盘输入框显示的默认值
@@ -159,11 +165,14 @@ namespace QGMiniGame
         public string confirmType; //键盘右下角confirm按钮类型，只影响按钮的文本内容
     }
 
-
-    public class ReplaceRule
+    public class SubscribeParam
     {
-        public string oldStr;
-        public string newStr;
+        public string templateIds;
+        public string clientId;
+        public string userId;
+        public string scene;
+        public int type;
+        public string subDesc;
     }
 
 }

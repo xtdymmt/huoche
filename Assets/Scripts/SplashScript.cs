@@ -35,8 +35,8 @@ public class SplashScript : MonoBehaviour
 
 	private IEnumerator Load()
 	{
-		Handheld.SetActivityIndicatorStyle(AndroidActivityIndicatorStyle.Small);
-		Handheld.StartActivityIndicator();
+		//Handheld.SetActivityIndicatorStyle(AndroidActivityIndicatorStyle.Small);
+		//Handheld.StartActivityIndicator();
 		yield return new WaitForSeconds(0f);
 		yield break;
 	}
